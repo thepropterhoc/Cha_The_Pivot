@@ -1,5 +1,6 @@
 import smtplib
 
+"""
 def prompt(prompt):
     return raw_input(prompt).strip()
 
@@ -20,8 +21,9 @@ while 1:
     msg = msg + line
 
 print "Message length is " + repr(len(msg))
+"""
 
-server = smtplib.SMTP('localhost', port=25)
+server = smtplib.SMTP('gocha.io', port=1025)
 server.set_debuglevel(1)
-server.sendmail(fromaddr, toaddrs, msg)
+server.sendmail('vanhooser@ou.edu', 'shelbyvanhooser@yahoo.com', 'this is a test message')
 server.quit()
