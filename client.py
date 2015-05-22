@@ -23,7 +23,7 @@ while 1:
 print "Message length is " + repr(len(msg))
 """
 
-server = smtplib.SMTP('gocha.io', port=1025)
+server = smtplib.SMTP('54.69.116.161', port=1025)
 server.set_debuglevel(1)
 server.sendmail('vanhooser@ou.edu', 'shelbyvanhooser@yahoo.com', 'this is a test message')
 server.quit()
