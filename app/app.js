@@ -16,10 +16,17 @@ var secretKey = fs.readFileSync('/home/ubuntu/secretKey.txt').toString();
 var nodemailer = require('nodemailer');
 var ses = require('nodemailer-ses-transport');
 
-var transporter = nodemailer.createTransport(ses({
-    accessKeyId: accessKey,
-    secretAccessKey: secretKey
-  }));
+// create reusable transporter object using SMTP transport
+var transporter = nodemailer.createTransport({
+    service: 'ses',
+    auth: {
+        user: accessKey,
+        pass: secretKey
+    }
+});
+
+// NB! No need to recreate the transporter object. You can use
+// the same transporter object for all e-mails
 
 var app = express();
 
@@ -68,11 +75,20 @@ mailin.on('message', function (connection, data, content) {
   console.log(data.from[0].address);
   console.log(data.text);
 
-  transporter.sendMail({
+  var mailOptions = {
     from: 'postmaster@gocha.io',
     to: data.from[0].address,
     subject: data.subject,
     text: data.text
+  };
+
+  // send mail with defined transport object
+  transporter.sendMail(mailOptions, function(error, info){
+      if(error){
+          console.log(error);
+      }else{
+          console.log('Message sent: ' + info.response);
+      }
   });
 
   /* Do something useful with the parsed message here.
