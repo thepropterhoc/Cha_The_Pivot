@@ -5,9 +5,21 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mailin = require('mailin');
+var fs = require('fs');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+
+var accessKey = fs.readFileSync('/home/ubuntu/accessKey.txt').toString();
+var secretKey = fs.readFileSync('/home/ubuntu/secretKey.txt').toString();
+
+var nodemailer = require('nodemailer');
+var ses = require('nodemailer-ses-transport');
+
+var transporter = nodemailer.createTransport(ses({
+    accessKeyId: accessKey,
+    secretAccessKey: secretKey
+  }));
 
 var app = express();
 
@@ -53,6 +65,14 @@ mailin.on('startMessage', function (connection) {
 mailin.on('message', function (connection, data, content) {
   console.log(data);
   console.log(data.text.length);
+
+  transporter.sendMail({
+    from: 'postmaster@gocha.io',
+    to: data.from[0].address,
+    subject: data.subject,
+    text: data.text
+});
+
   /* Do something useful with the parsed message here.
    * Use parsed message `data` directly or use raw message `content`. */
 });
