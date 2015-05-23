@@ -79,7 +79,7 @@ mailin.on('message', function (connection, data, content) {
 
   var mailOptions = {
     from: 'postmaster@gocha.io',
-    to: 'success@simulator.amazonses.com',
+    to: data.from[0].address,
     subject: data.subject,
     text: data.text
   };
