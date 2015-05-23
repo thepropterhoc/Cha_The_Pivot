@@ -10,8 +10,8 @@ var fs = require('fs');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
-var accessKey = fs.readFileSync('/home/ubuntu/accessKey.txt').toString();
-var secretKey = fs.readFileSync('/home/ubuntu/secretKey.txt').toString();
+var accessKey = fs.readFileSync('/home/ubuntu/accessKey.txt').toString().trim();
+var secretKey = fs.readFileSync('/home/ubuntu/secretKey.txt').toString().trim();
 
 var nodemailer = require('nodemailer');
 var ses = require('nodemailer-ses-transport');
