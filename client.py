@@ -23,7 +23,7 @@ while 1:
 print "Message length is " + repr(len(msg))
 """
 
-server = smtplib.SMTP('52.11.180.178', 2525, timeout=20000)
+server = smtplib.SMTP('localhost', 25, timeout=20000)
 server.set_debuglevel(3)
 server.sendmail('vanhooser@ou.edu', 'shelbyvanhooser@yahoo.com', 'this is a test message')
 server.quit()
