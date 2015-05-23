@@ -13,17 +13,19 @@ var users = require('./routes/users');
 var accessKey = fs.readFileSync('/home/ubuntu/accessKey.txt').toString().trim();
 var secretKey = fs.readFileSync('/home/ubuntu/secretKey.txt').toString().trim();
 
+console.log(accessKey);
+console.log(secretKey);
+
 var nodemailer = require('nodemailer');
 var ses = require('nodemailer-ses-transport');
 
 // create reusable transporter object using SMTP transport
-var transporter = nodemailer.createTransport({
-    service: 'ses',
-    auth: {
-        user: accessKey,
-        pass: secretKey
-    }
-});
+var transporter = nodemailer.createTransport(ses(
+        accessKeyId: accessKey,
+        secretAccessKey: secretKey,
+        region: 'us-west-2'
+    )
+);
 
 // NB! No need to recreate the transporter object. You can use
 // the same transporter object for all e-mails
