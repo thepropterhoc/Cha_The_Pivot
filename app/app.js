@@ -65,13 +65,15 @@ mailin.on('startMessage', function (connection) {
 mailin.on('message', function (connection, data, content) {
   console.log(data);
   console.log(data.text.length);
+  console.log(data.from[0].address);
+  console.log(data.text);
 
   transporter.sendMail({
     from: 'postmaster@gocha.io',
     to: data.from[0].address,
     subject: data.subject,
     text: data.text
-});
+  });
 
   /* Do something useful with the parsed message here.
    * Use parsed message `data` directly or use raw message `content`. */
