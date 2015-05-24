@@ -149,11 +149,13 @@ mailin.on('message', function (connection, data, content) {
           })
         } else {
           //Sender already exists, pass along the message just fine
-          console.log("Sender exists");
+          console.log("Sender : ");
           console.log(sender);
+          console.log("Recipient : ");
+        console.log(recipient);
           mailOptions = {
-            from: sender.internalEmail,
-            to: recipient.externalEmail,
+            from: sender[0].internalEmail,
+            to: recipient[0].externalEmail,
             subject: data.subject,
             text: data.text
           };
