@@ -11,7 +11,7 @@ var emailSchema = new Schema({
 
 // the schema is useless so far
 // we need to create a model using it
-var Email = mongoose.model('User', userSchema);
+var Email = mongoose.model('Email', emailSchema);
 
 // make this available to our users in our Node applications
 module.exports = Email;
