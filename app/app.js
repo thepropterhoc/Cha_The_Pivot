@@ -119,9 +119,7 @@ mailin.on('message', function (connection, data, content) {
     } else {
       //Check if sender exists
       User.find({ externalEmail : data.from[0].address }, function(sender, err) {
-        if(err){
-
-        } else if(!sender.length){
+        if(err || !sender.length){
           //User does not exist, so we need to make an email for them
           var newUser = new User({
             externalEmail: data.from[0].address
