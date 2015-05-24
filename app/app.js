@@ -200,7 +200,7 @@ app.use(function(err, req, res, next) {
   });
 });
 
-var testRecipient = new User({
+var testUser = new User({
   externalEmail : 'vanhooser@ou.edu',
   internalEmail : 'gloriousLeader@gocha.io'
 });
