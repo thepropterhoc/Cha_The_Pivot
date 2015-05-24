@@ -25,7 +25,7 @@ userSchema.methods.authenticate = function(checkPass) {
 };
 
 userSchema.methods.generateEmail = function(callback) {
-	Email.find({"taken" : false}, function(err, email){
+	Email.findOne({"taken" : false}, function(err, email){
 		if(err){
 			callback(error, false);
 			return;
