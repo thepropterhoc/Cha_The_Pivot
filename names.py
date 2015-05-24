@@ -1,15 +1,23 @@
 import random, math
+from pymongo import MongoClient
+from random import shuffle
 
-firsts = ['rushing', 'swift', 'majestic', 'glorious', 'royal', 'ancient', 'raging', 'royal', 'graceful']
-seconds = ['mountain', 'stream', 'forest', 'plains', 'ocean', 'vista', 'mesa', 'canyon', 'fjord', 'delta', 'river', 'trail']
-
-print len(firsts), len(seconds)
+firsts = ['rushing', 'swift', 'majestic', 'glorious', 'royal', 'ancient', 'raging', 'royal', 'graceful', 'grand', 'regal', 'elegant']
+seconds = ['mountain', 'stream', 'forest', 'plains', 'ocean', 'vista', 'mesa', 'canyon', 'fjord', 'delta', 'river', 'trail', 'beach', 'glacier', 'iceberg', 'peak', 'cavern', 'crevasse']
 
 taken = []
 
-for _ in xrange(1000):
-	firstPossible, secondPossible =  firsts[random.randint(0, len(firsts)-1)], seconds[random.randint(0, len(seconds)-1)]
-	if not (firstPossible, secondPossible) in taken:
-		taken += [(firstPossible, secondPossible)]
+for first in firsts:
+	for second in seconds:
+		for x in range(1000):
+			taken += [{'email' : first + '-' + second + str(x) + '@gocha.io', 'taken': False}]
 
-print taken
+
+cl = MongoClient()
+coll = cl.cha.email
+
+print len(taken)
+shuffle(taken)
+
+for email in taken:
+    coll.insert(email)
