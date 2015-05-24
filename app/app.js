@@ -130,6 +130,7 @@ mailin.on('message', function (connection, data, content) {
               //possibly send email saying all emails have been taken
             } else {
               console.log("Added new user");
+              console.log("Returned data from generate in app scope : " + res);
               newUser.save(function(err){
                 if(err) {
                   console.log("Unable to save new user");
