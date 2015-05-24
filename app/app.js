@@ -101,16 +101,14 @@ mailin.on('message', function (connection, data, content) {
       console.log("Recipient : ");
       console.log(recipient);
       mailOptions = {
-        from: 'postmaster@gocha.io',
-        to: data.from[0].address,
-        subject: "Address Error",
         html: "Terribly sorry, but that email doesn't exist. <br><br>Regards,<br>The Management"
       };
-      /*mailOptions.headers = {
-        from: '<'.concat(mailOptions.from).concat('>'),
-        to : '<'.concat(mailOptions.to).concat('>'),
+      mailOptions.headers = {
+        from: '<'.concat('postmaster@gocha.io').concat('>'),
+        to : '<'.concat(data.from[0].address).concat('>'),
+        subject: "Address Error",
         contentType: 'text/plain',
-      };*/
+      };
       transporter.sendMail(mailOptions, function(error, info){
         if(error){
             console.log(mailOptions);
@@ -123,16 +121,14 @@ mailin.on('message', function (connection, data, content) {
       //Send email too long error
       console.log("Email length too long");
       mailOptions = {
-        from: 'postmaster@gocha.io',
-        to: data.from[0].address,
-        subject: "Length Error",
         html: "Character count for your email was too long.  Current count is: " + data.text.length + "<br><br>Regards,<br>The Management"
-      };/*
+      };
       mailOptions.headers = {
-        from: '<'.concat(mailOptions.from).concat('>'),
-        to : '<'.concat(mailOptions.to).concat('>'),
+        from: '<'.concat('postmaster@gocha.io').concat('>'),
+        to : '<'.concat(data.from[0].address).concat('>'),
+        subject: "Length Error",
         contentType: 'text/plain',
-      };*/
+      };
       transporter.sendMail(mailOptions, function(error, info){
         if(error){
             console.log(mailOptions);
@@ -165,16 +161,14 @@ mailin.on('message', function (connection, data, content) {
                   console.log("New user saved");
                   //Now, we can pass along the message
                   mailOptions = {
-                    from: res,
-                    to: recipient.externalEmail,
-                    subject: data.subject,
                     text: data.text
-                  }/*
+                  }
                   mailOptions.headers = {
-                    from: '<'.concat(mailOptions.from).concat('>'),
-                    to : '<'.concat(mailOptions.to).concat('>'),
+                    from: '<'.concat(res).concat('>'),
+                    to : '<'.concat(recipient.externalEmail).concat('>'),
+                    subject: data.subject,
                     contentType: 'text/plain',
-                  };*/
+                  };
                   transporter.sendMail(mailOptions, function(error, info){
                     if(error){
                         console.log(mailOptions);
@@ -194,16 +188,14 @@ mailin.on('message', function (connection, data, content) {
           console.log("Recipient : ");
           console.log(recipient);
           mailOptions = {
-            from: sender.internalEmail,
-            to: recipient.externalEmail,
-            subject: data.subject,
             text: data.text
-          };/*
+          };
           mailOptions.headers = {
-            from: '<'.concat(mailOptions.from).concat('>'),
-            to : '<'.concat(mailOptions.to).concat('>'),
+            from: '<'.concat(sender.internalEmail).concat('>'),
+            to : '<'.concat(recipient.externalEmail).concat('>'),
+            subject: data.subject,
             contentType: 'text/plain',
-          };*/
+          };
           transporter.sendMail(mailOptions, function(error, info){
             if(error){
                 console.log(mailOptions);
