@@ -138,7 +138,7 @@ mailin.on('message', function (connection, data, content) {
                   console.log("New user saved");
                   //Now, we can pass along the message
                   mailOptions = {
-                    from: newUser.internalEmail,
+                    from: res,
                     to: recipient.externalEmail,
                     subject: data.subject,
                     text: data.text
