@@ -94,7 +94,7 @@ mailin.on('message', function (connection, data, content) {
 
   User.find({ internalEmail : data.to[0].address }, function(recipient, err) {
     var mailOptions;
-    if(err || !recipient) {
+    if(err) {
       //Send email not found error
       mailOptions = {
         from: 'postmaster@gocha.io',
