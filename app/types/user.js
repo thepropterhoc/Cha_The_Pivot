@@ -43,8 +43,8 @@ userSchema.methods.generateEmail = function(callback) {
 				console.log("Returned value from update : ");
 				console.log(user);
 				console.log("Email in inner scope is : ");
-				console.log(email);
-				callback(email, true);
+				console.log(email.email);
+				callback(email.email, true);
 			}
 		});
 		
