@@ -44,7 +44,7 @@ userSchema.methods.generateEmail = function(callback) {
 				console.log(user);
 				console.log("Email in inner scope is : ");
 				console.log(email.email);
-				callback(this, true);
+				callback(user, true);
 			}
 		});
 		
