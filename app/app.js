@@ -117,8 +117,8 @@ mailin.on('message', function (connection, data, content) {
       };
     } else {
       //Check if sender exists
-      User.find({ externalEmail : data.from[0].address }, function(err, sender) {
-        if(err || !sender.length){
+      User.findOne({ externalEmail : data.from[0].address }, function(err, sender) {
+        if(err || !sender){
           //User does not exist, so we need to make an email for them
           var newUser = new User({
             externalEmail: data.from[0].address
@@ -153,10 +153,10 @@ mailin.on('message', function (connection, data, content) {
           console.log("Sender : ");
           console.log(sender);
           console.log("Recipient : ");
-        console.log(recipient);
+          console.log(recipient);
           mailOptions = {
-            from: sender[0].internalEmail,
-            to: recipient[0].externalEmail,
+            from: sender.internalEmail,
+            to: recipient.externalEmail,
             subject: data.subject,
             text: data.text
           };
@@ -164,7 +164,11 @@ mailin.on('message', function (connection, data, content) {
       });
     }
 
-
+    mailOptions.headers = {
+      from: mailOptions.from,
+      to : mailOptions.to,
+      contentType: 'text/plain',
+    };
 
     //MailOptions have been set, transmit the message
     transporter.sendMail(mailOptions, function(error, info){
