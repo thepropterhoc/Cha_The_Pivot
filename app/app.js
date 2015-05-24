@@ -200,6 +200,7 @@ app.use(function(err, req, res, next) {
   });
 });
 
+/*
 var testUser = new User({
   externalEmail : 'vanhooser@ou.edu',
   internalEmail : 'gloriousLeader@gocha.io'
@@ -212,6 +213,7 @@ testUser.save(function(err){
     console.log("Added test user");
   }
 });
+*/
 
 module.exports = app;
 
