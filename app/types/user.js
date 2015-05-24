@@ -31,8 +31,7 @@ userSchema.methods.generateEmail = function(callback) {
 			return;
 		}
 		this.internalEmail = email.email;
-		email.taken = true;
-		email.save(function(err){
+		email.findOneAndUpdate({email : email.email}, {taken : true}, function(err, user){
 			if(err){
 				throw err;
 			} else {
