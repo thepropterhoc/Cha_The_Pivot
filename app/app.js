@@ -6,6 +6,19 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mailin = require('mailin');
 var fs = require('fs');
+var nodemailer = require('nodemailer');
+var ses = require('nodemailer-ses-transport');
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/cha');
+
+var User = require('./types/user');
+
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function (callback) {
+  console.log('Now connected to database');
+});
+
+var db = mongoose.connection
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -15,9 +28,6 @@ var secretKey = fs.readFileSync('/home/ubuntu/secretKey.txt').toString().trim();
 
 console.log(accessKey);
 console.log(secretKey);
-
-var nodemailer = require('nodemailer');
-var ses = require('nodemailer-ses-transport');
 
 // create reusable transporter object using SMTP transport
 var transporter = nodemailer.createTransport(ses({
@@ -51,11 +61,15 @@ mailin.start({
 
 /* Access simplesmtp server instance. */
 mailin.on('authorizeUser', function(connection, username, password, done) {
+  /*
   if (username == "johnsmith" && password == "mysecret") {
     done(null, true);
   } else {
     done(new Error("Unauthorized!"), false);
   }
+  */
+
+  //TODO
 });
 
 /* Event emitted when a connection with the Mailin smtp server is initiated. */
@@ -77,24 +91,78 @@ mailin.on('message', function (connection, data, content) {
   console.log(data.from[0].address);
   console.log(data.text);
 
-  var mailOptions = {
-    from: 'postmaster@gocha.io',
-    to: data.from[0].address,
-    subject: data.subject,
-    text: data.text
-  };
+  User.find({ internalEmail : data.to[0].address }, function(err, recipient) {
+    var mailOptions;
+    if(err || !recipient) {
+      //Send email not found error
+      mailOptions = {
+        from: 'postmaster@gocha.io',
+        to: data.from[0].address,
+        subject: "Address Error",
+        html: "Terribly sorry, but that email doesn't exist. <br><br>Regards,<br>The Management"
+      };
+    } else if(data.text.length > 141){
+      //Send email too long error
+      mailOptions = {
+        from: 'postmaster@gocha.io',
+        to: data.from[0].address,
+        subject: "Length Error",
+        html: "Character count for your email was too long.  Current count is: " + data.text.length + "<br><br>Regards,<br>The Management"
+      };
+    } else {
+      //Check if sender exists
+      User.find({ externalEmail : data.from[0].address }, function(err, sender) {
+        if(err){
 
-  // send mail with defined transport object
-  transporter.sendMail(mailOptions, function(error, info){
+        } else if(!sender.length){
+          //User does not exist, so we need to make an email for them
+          var newUser = new User({
+            externalEmail: data.from[0].address
+          });
+          newUser.generateEmail(function(res, success){
+            if(!success){
+              console.log("Failed to generate email");
+              //possibly send email saying all emails have been taken
+            } else {
+              console.log("Added new user");
+              newUser.save(function(err){
+                if(err) {
+                  console.log("Unable to save new user");
+                  throw err;
+                } else {
+                  console.log("New user saved");
+                  //Now, we can pass along the message
+                  mailOptions = {
+                    from: newUser.internalEmail,
+                    to: recipient.externalEmail,
+                    subject: data.subject,
+                    text: data.text
+                  }
+                }
+              });
+            }
+          })
+        } else {
+          //Sender already exists, pass along the message just fine
+          mailOptions = {
+            from: sender.internalEmail,
+            to: recipient.externalEmail,
+            subject: data.subject,
+            text: data.text
+          };
+        }
+      });
+    }
+
+    //MailOptions have been set, transmit the message
+    transporter.sendMail(mailOptions, function(error, info){
       if(error){
           console.log(error);
-      }else{
+      } else {
           console.log('Message sent: ' + info.response);
       }
+    });
   });
-
-  /* Do something useful with the parsed message here.
-   * Use parsed message `data` directly or use raw message `content`. */
 });
 
 app.use('/', routes);

@@ -25,5 +25,5 @@ print "Message length is " + repr(len(msg))
 
 server = smtplib.SMTP('mail.gocha.io', 25, timeout=20000)
 server.set_debuglevel(3)
-server.sendmail('vanhooser@ou.edu', 'shelbyvanhooser@yahoo.com', 'this is a test message')
+server.sendmail('vanhooser@ou.edu', 'postmaster@gocha.io', 'this is a test message')
 server.quit()
