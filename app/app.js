@@ -96,6 +96,7 @@ mailin.on('message', function (connection, data, content) {
     var mailOptions;
     if(err) {
       //Send email not found error
+      console.log(err);
       mailOptions = {
         from: 'postmaster@gocha.io',
         to: data.from[0].address,
@@ -104,6 +105,7 @@ mailin.on('message', function (connection, data, content) {
       };
     } else if(data.text.length > 141){
       //Send email too long error
+      console.log("Email length too long");
       mailOptions = {
         from: 'postmaster@gocha.io',
         to: data.from[0].address,
