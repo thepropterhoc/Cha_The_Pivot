@@ -92,7 +92,7 @@ mailin.on('message', function (connection, data, content) {
   console.log(data.from[0].address);
   console.log(data.text);
 
-  User.find({ internalEmail : data.to[0].address }, function(err, recipient) {
+  User.find({ internalEmail : data.to[0].address }, function(recipient, err) {
     var mailOptions;
     if(err || !recipient) {
       //Send email not found error
@@ -112,7 +112,7 @@ mailin.on('message', function (connection, data, content) {
       };
     } else {
       //Check if sender exists
-      User.find({ externalEmail : data.from[0].address }, function(err, sender) {
+      User.find({ externalEmail : data.from[0].address }, function(sender, err) {
         if(err){
 
         } else if(!sender.length){
@@ -145,6 +145,8 @@ mailin.on('message', function (connection, data, content) {
           })
         } else {
           //Sender already exists, pass along the message just fine
+          console.log("Sender exists");
+          console.log(sender);
           mailOptions = {
             from: sender.internalEmail,
             to: recipient.externalEmail,
