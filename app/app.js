@@ -155,9 +155,12 @@ mailin.on('message', function (connection, data, content) {
       });
     }
 
+
+
     //MailOptions have been set, transmit the message
     transporter.sendMail(mailOptions, function(error, info){
       if(error){
+          console.log(mailOptions);
           console.log(error);
       } else {
           console.log('Message sent: ' + info.response);
