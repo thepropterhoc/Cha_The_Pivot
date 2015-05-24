@@ -165,8 +165,8 @@ mailin.on('message', function (connection, data, content) {
     }
 
     mailOptions.headers = {
-      from: mailOptions.from,
-      to : mailOptions.to,
+      from: this.from,
+      to : this.to,
       contentType: 'text/plain',
     };
 
