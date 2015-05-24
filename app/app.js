@@ -106,6 +106,19 @@ mailin.on('message', function (connection, data, content) {
         subject: "Address Error",
         html: "Terribly sorry, but that email doesn't exist. <br><br>Regards,<br>The Management"
       };
+      mailOptions.headers = {
+        from: mailOptions.from,
+        to : mailOptions.to,
+        contentType: 'text/plain',
+      };
+      transporter.sendMail(mailOptions, function(error, info){
+        if(error){
+            console.log(mailOptions);
+            console.log(error);
+        } else {
+            console.log('Message sent: ' + info.response);
+        }
+      });
     } else if(data.text.length > 141){
       //Send email too long error
       console.log("Email length too long");
@@ -115,6 +128,19 @@ mailin.on('message', function (connection, data, content) {
         subject: "Length Error",
         html: "Character count for your email was too long.  Current count is: " + data.text.length + "<br><br>Regards,<br>The Management"
       };
+      mailOptions.headers = {
+        from: mailOptions.from,
+        to : mailOptions.to,
+        contentType: 'text/plain',
+      };
+      transporter.sendMail(mailOptions, function(error, info){
+        if(error){
+            console.log(mailOptions);
+            console.log(error);
+        } else {
+            console.log('Message sent: ' + info.response);
+        }
+      });
     } else {
       //Check if sender exists
       User.findOne({ externalEmail : data.from[0].address }, function(err, sender) {
@@ -144,6 +170,19 @@ mailin.on('message', function (connection, data, content) {
                     subject: data.subject,
                     text: data.text
                   }
+                  mailOptions.headers = {
+                    from: mailOptions.from,
+                    to : mailOptions.to,
+                    contentType: 'text/plain',
+                  };
+                  transporter.sendMail(mailOptions, function(error, info){
+                    if(error){
+                        console.log(mailOptions);
+                        console.log(error);
+                    } else {
+                        console.log('Message sent: ' + info.response);
+                    }
+                  });
                 }
               });
             }
@@ -160,25 +199,22 @@ mailin.on('message', function (connection, data, content) {
             subject: data.subject,
             text: data.text
           };
+          mailOptions.headers = {
+            from: mailOptions.from,
+            to : mailOptions.to,
+            contentType: 'text/plain',
+          };
+          transporter.sendMail(mailOptions, function(error, info){
+            if(error){
+                console.log(mailOptions);
+                console.log(error);
+            } else {
+                console.log('Message sent: ' + info.response);
+            }
+          });
         }
       });
     }
-
-    mailOptions.headers = {
-      from: this.from,
-      to : this.to,
-      contentType: 'text/plain',
-    };
-
-    //MailOptions have been set, transmit the message
-    transporter.sendMail(mailOptions, function(error, info){
-      if(error){
-          console.log(mailOptions);
-          console.log(error);
-      } else {
-          console.log('Message sent: ' + info.response);
-      }
-    });
   });
 });
 
