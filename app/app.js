@@ -92,9 +92,9 @@ mailin.on('message', function (connection, data, content) {
   console.log(data.from[0].address);
   console.log(data.text);
 
-  User.find({ internalEmail : data.to[0].address }, function(recipient, err) {
+  User.find({ internalEmail : data.to[0].address }, function(err, recipient) {
     var mailOptions;
-    if(err) {
+    if(err || !recipient.externalEmail) {
       //Send email not found error
       console.log(err);
       mailOptions = {
