@@ -30,6 +30,7 @@ userSchema.methods.generateEmail = function(callback) {
 			callback(error, false);
 			return;
 		}
+		console.log("Find email returned : " + email);
 		console.log("Found untaken email : " + email.email);
 		this.internalEmail = email.email;
 		Email.findOneAndUpdate({email : email.email}, {taken : true}, function(err, user){
@@ -37,10 +38,12 @@ userSchema.methods.generateEmail = function(callback) {
 				throw err;
 			} else {
 				console.log("Saved email as being taken");
+				console.log("Returned value from update : " + user);
+				console.log("Email in inner scope is : " + email);
+				callback(email, true);
 			}
 		});
-		console.log("generated unique email");
-		callback(email, true);
+		
 	});
 }
 
