@@ -10,7 +10,7 @@ taken = []
 for first in firsts:
 	for second in seconds:
 		for x in range(1000):
-			taken += [{'email' : first + '-' + second + str(x) + '@gocha.io', 'taken': False}]
+			taken += [{email: first + '-' + second + str(x) + '@gocha.io', taken: False}]
 
 
 cl = MongoClient()
