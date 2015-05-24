@@ -13,12 +13,13 @@ mongoose.connect('mongodb://localhost/cha');
 
 var User = require('./types/user');
 
+
+
+var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
   console.log('Now connected to database');
 });
-
-var db = mongoose.connection
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
