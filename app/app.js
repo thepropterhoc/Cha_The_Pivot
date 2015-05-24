@@ -107,8 +107,8 @@ mailin.on('message', function (connection, data, content) {
         html: "Terribly sorry, but that email doesn't exist. <br><br>Regards,<br>The Management"
       };
       mailOptions.headers = {
-        from: mailOptions.from,
-        to : mailOptions.to,
+        from: '<'.concat(mailOptions.from).concat('>'),
+        to : '<'.concat(mailOptions.to).concat('>'),
         contentType: 'text/plain',
       };
       transporter.sendMail(mailOptions, function(error, info){
@@ -129,8 +129,8 @@ mailin.on('message', function (connection, data, content) {
         html: "Character count for your email was too long.  Current count is: " + data.text.length + "<br><br>Regards,<br>The Management"
       };
       mailOptions.headers = {
-        from: mailOptions.from,
-        to : mailOptions.to,
+        from: '<'.concat(mailOptions.from).concat('>'),
+        to : '<'.concat(mailOptions.to).concat('>'),
         contentType: 'text/plain',
       };
       transporter.sendMail(mailOptions, function(error, info){
@@ -171,8 +171,8 @@ mailin.on('message', function (connection, data, content) {
                     text: data.text
                   }
                   mailOptions.headers = {
-                    from: mailOptions.from,
-                    to : mailOptions.to,
+                    from: '<'.concat(mailOptions.from).concat('>'),
+                    to : '<'.concat(mailOptions.to).concat('>'),
                     contentType: 'text/plain',
                   };
                   transporter.sendMail(mailOptions, function(error, info){
@@ -200,8 +200,8 @@ mailin.on('message', function (connection, data, content) {
             text: data.text
           };
           mailOptions.headers = {
-            from: mailOptions.from,
-            to : mailOptions.to,
+            from: '<'.concat(mailOptions.from).concat('>'),
+            to : '<'.concat(mailOptions.to).concat('>'),
             contentType: 'text/plain',
           };
           transporter.sendMail(mailOptions, function(error, info){
