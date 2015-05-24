@@ -153,7 +153,7 @@ mailin.on('message', function (connection, data, content) {
               console.log("Added new user");
               console.log("Returned data from generate in app scope : ");
               console.log(res);
-              User.findOneAndUpdate({"externalEmail" : data.from[0].address}, {"internalEmail" : res}, function(err){
+              res.save(function(err){
                 if(err) {
                   console.log("Unable to save new user");
                   throw err;
@@ -164,7 +164,7 @@ mailin.on('message', function (connection, data, content) {
                     text: data.text
                   }
                   mailOptions.headers = {
-                    from: '<'.concat(res).concat('>'),
+                    from: '<'.concat(res.internalEmail).concat('>'),
                     to : '<'.concat(recipient.externalEmail).concat('>'),
                     subject: data.subject,
                     contentType: 'text/plain',
