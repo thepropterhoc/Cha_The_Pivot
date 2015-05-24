@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 var emailSchema = new Schema({
 	email : {type : String, default : "None"},
 	taken : {type : Boolean, default: false },
-	owner : {type : ObjectID}
+	owner : {type : Schema.Types.ObjectId}
 });
 
 // the schema is useless so far
