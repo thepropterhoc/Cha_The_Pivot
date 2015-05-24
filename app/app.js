@@ -106,11 +106,11 @@ mailin.on('message', function (connection, data, content) {
         subject: "Address Error",
         html: "Terribly sorry, but that email doesn't exist. <br><br>Regards,<br>The Management"
       };
-      mailOptions.headers = {
+      /*mailOptions.headers = {
         from: '<'.concat(mailOptions.from).concat('>'),
         to : '<'.concat(mailOptions.to).concat('>'),
         contentType: 'text/plain',
-      };
+      };*/
       transporter.sendMail(mailOptions, function(error, info){
         if(error){
             console.log(mailOptions);
@@ -127,12 +127,12 @@ mailin.on('message', function (connection, data, content) {
         to: data.from[0].address,
         subject: "Length Error",
         html: "Character count for your email was too long.  Current count is: " + data.text.length + "<br><br>Regards,<br>The Management"
-      };
+      };/*
       mailOptions.headers = {
         from: '<'.concat(mailOptions.from).concat('>'),
         to : '<'.concat(mailOptions.to).concat('>'),
         contentType: 'text/plain',
-      };
+      };*/
       transporter.sendMail(mailOptions, function(error, info){
         if(error){
             console.log(mailOptions);
@@ -169,12 +169,12 @@ mailin.on('message', function (connection, data, content) {
                     to: recipient.externalEmail,
                     subject: data.subject,
                     text: data.text
-                  }
+                  }/*
                   mailOptions.headers = {
                     from: '<'.concat(mailOptions.from).concat('>'),
                     to : '<'.concat(mailOptions.to).concat('>'),
                     contentType: 'text/plain',
-                  };
+                  };*/
                   transporter.sendMail(mailOptions, function(error, info){
                     if(error){
                         console.log(mailOptions);
@@ -198,12 +198,12 @@ mailin.on('message', function (connection, data, content) {
             to: recipient.externalEmail,
             subject: data.subject,
             text: data.text
-          };
+          };/*
           mailOptions.headers = {
             from: '<'.concat(mailOptions.from).concat('>'),
             to : '<'.concat(mailOptions.to).concat('>'),
             contentType: 'text/plain',
-          };
+          };*/
           transporter.sendMail(mailOptions, function(error, info){
             if(error){
                 console.log(mailOptions);
