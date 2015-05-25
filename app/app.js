@@ -164,7 +164,7 @@ mailin.on('message', function (connection, data, content) {
                     text: data.text
                   }
                   mailOptions.headers = {
-                    from: '<'.concat(res.email).concat('>'),
+                    from: '<'.concat(res.internalEmail).concat('>'),
                     to : '<'.concat(recipient.externalEmail).concat('>'),
                     subject: data.subject,
                     contentType: 'text/plain',

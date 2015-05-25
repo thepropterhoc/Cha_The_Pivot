@@ -35,6 +35,7 @@ userSchema.methods.generateEmail = function(callback) {
 		console.log("Found untaken email : ");
 		console.log(email.email);
 		this.internalEmail = email.email;
+		var _this = this;
 		Email.findOneAndUpdate({email : email.email}, {taken : true}, function(err, user){
 			if(err){
 				throw err;
@@ -44,7 +45,7 @@ userSchema.methods.generateEmail = function(callback) {
 				console.log(user);
 				console.log("Email in inner scope is : ");
 				console.log(email.email);
-				callback(user, true);
+				callback(_this, true);
 			}
 		});
 		
