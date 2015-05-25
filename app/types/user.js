@@ -25,6 +25,7 @@ userSchema.methods.authenticate = function(checkPass) {
 };
 
 userSchema.methods.generateEmail = function(callback) {
+	var _this = this;
 	Email.findOne({"taken" : false}, function(err, email){
 		if(err){
 			callback(error, false);
@@ -34,8 +35,8 @@ userSchema.methods.generateEmail = function(callback) {
 		console.log(email);
 		console.log("Found untaken email : ");
 		console.log(email.email);
-		this.internalEmail = email.email;
-		var _this = this;
+		internalEmail = email.email;
+		
 		Email.findOneAndUpdate({email : email.email}, {taken : true}, function(err, user){
 			if(err){
 				throw err;
