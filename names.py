@@ -31,7 +31,7 @@ with open('data.txt', 'w') as f:
 	"""
 
 cl = MongoClient()
-coll = cl.cha.email
+coll = cl.cha.emails
 
 for first in firsts:
 	for second in seconds:
