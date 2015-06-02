@@ -13,6 +13,7 @@ from random import shuffle
 firsts = 'alert amused brave bright charming cheerful comfortable cooperative courageous delightful determined eager elated enchanting encouraging energetic excited fantastic friendly frowning funny gentle glorious good happy healthy helpful hilarious innocent jolly kind lively lovely lucky perfect proud relaxed smiling splendid successful thoughtful victorious well witty wonderful'.split(' ')
 seconds = 'alligator ant bear bee bird camel cat cheetah chicken chimp cow crocodile deer dog dolphin duck eagle elephant fish fly fox frog giraffe goat goldfish hamster horse kangaroo kitten lion lobster monkey octopus owl panda pig puppy rabbit rat scorpion seal shark sheep snail snake spider squirrel tiger turtle wolf zebra'.split(' ')
 
+results = []
 
 """
 var = raw_input()
@@ -36,4 +37,9 @@ coll = cl.cha.emails
 for first in firsts:
 	for second in seconds:
 		for x in range(1000):
-			coll.insert({'email' : '{0}-{1}{2:d}@gocha.io'.format(first, second, x), 'taken' : False})
+			results += [{'email' : '{0}-{1}{2:d}@gocha.io'.format(first, second, x), 'taken' : False}]
+
+shuffle(results)
+
+for email in results:
+	coll.insert(email)
