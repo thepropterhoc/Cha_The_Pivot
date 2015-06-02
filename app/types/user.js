@@ -35,7 +35,7 @@ userSchema.methods.generateEmail = function(callback) {
 		console.log(email);
 		console.log("Found untaken email : ");
 		console.log(email.email);
-		internalEmail = email.email;
+		_this.internalEmail = email.email;
 		
 		Email.findOneAndUpdate({email : email.email}, {taken : true}, function(err, user){
 			if(err){
